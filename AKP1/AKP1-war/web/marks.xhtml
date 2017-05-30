@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <f:metadata>
+            <f:viewParam name="view" value="#{markBean.param_view}" />
+            </f:metadata>
+        <ui:define name="landing_name">
+            <c:if test="#{markBean.param_view==null}">
+            Список оценок
+            </c:if>
+            <c:if test="#{markBean.param_view=='bad'}">
+            Список задолженностей
+            </c:if>
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID-оценки</td>
+                            <td>Студент</td>
+                            <td>Предмет</td>
+                            <td>Ведомость</td>
+                            <td>Семестр</td>
+                            <td>Оценка</td>
+                            <td>Детали</td>
+                        </tr>
+                        <c:if test="#{markBean.param_view==null or markBean.param_view=='all'}">
+                        <ui:repeat var="mark" value="#{markBean.marksForUser}">
+                            <tr>
+                                <td>#{mark.idMark}</td>
+                                <td>#{mark.user.fio}</td>
+                                <td>#{mark.statement.title}</td>
+                                <td>#{mark.statement.title}</td>
+                                <td>#{mark.statement.semestr}</td>
+                                <td>#{mark.mark}</td>
+                                <td><a href='./mark-details.xhtml?mid=#{mark.idMark}' class="more-link">Подробнее</a></td>
+                            </tr>       
+                        </ui:repeat>
+                        </c:if>
+                        <c:if test="#{markBean.param_view=='bad'}">
+                            <ui:repeat var="mark" value="#{markBean.badMarksForUser}">
+                            <tr>
+                                <td>#{mark.idMark}</td>
+                                <td>#{mark.user.fio}</td>
+                                <td>#{mark.statement.title}</td>
+                                <td>#{mark.statement.title}</td>
+                                <td>#{mark.statement.semestr}</td>
+                                <td>#{mark.mark}</td>
+                                <td><a href='./mark-details.xhtml?mid=#{mark.idMark}' class="more-link">Подробнее</a></td>
+                            </tr>       
+                        </ui:repeat>
+                        </c:if>
+                    </table>
+
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <a href='./marks.xhtml?view=all'>Все оценки</a>
+                        <a href='./marks.xhtml?view=bad'>Задолженности</a>
+                    </div>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

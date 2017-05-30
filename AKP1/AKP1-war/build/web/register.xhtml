@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Регистрация нового пользователя
+        </ui:define>
+        <ui:define name="content">
+            <h:form>
+                <h:outputText value="ФИО:"/><br/>
+                <h:inputText value="#{userBean.fio}"/><br/><br/>
+                <h:outputText value="Email:"/><br/>
+                <h:inputText value="#{userBean.email}" id="email">
+                    <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
+                </h:inputText><h:message for="email" styleClass="form_error" lang="ru"/><br/><br/>
+                <h:outputText value="Пароль:"/><br/>
+                <h:inputSecret value="#{userBean.password}"/><br/><br/>
+                <h:commandButton value="Зарегистрироваться" action="#{userBean.RegisterNewUser()}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

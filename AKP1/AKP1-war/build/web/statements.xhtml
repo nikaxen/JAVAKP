@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            <c:if test="#{accountBean.rolename=='dek'}"> Список ведомостей</c:if>
+            <c:if test="#{accountBean.rolename=='prep'}"> Список несданных ведомостей</c:if>
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    <c:if test="#{accountBean.rolename=='dek'}">
+                    <h:form>
+                <h:outputText value="Поиск по ведомостям:"/><br/>
+                    <h:inputText value="#{statementBean.search_query}" styleClass="src-inp"/>
+                    <h:commandButton value="Найти" action="#{statementBean.getSearchResults()}" styleClass="src-btn"/>
+            </h:form>
+                    <br/><br/>
+                    </c:if>
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID-вед.</td>
+                            <td>Предмет</td>
+                            <td>Преподаватель</td>
+                            <td>Статус</td>
+                            <td>Название</td>
+                            <td>Семестр</td>
+                            <td>Детали</td>
+                        </tr>
+                        <c:if test="#{accountBean.rolename=='dek'}">
+                        <ui:repeat var="statement" value="#{statementBean.searchResults}">
+                            <tr>
+                                <td>#{statement.idStatement}</td>
+                                <td>#{statement.subject.subjectTitle}</td>
+                                <td>#{statement.user.fio}</td>
+                                <td>#{statement.status}</td>
+                                <td>#{statement.title}</td>
+                                <td>#{statement.semestr}</td>
+                                <td><a href='./statement-details.xhtml?sid=#{statement.idStatement}' class='more-link'>Подробнее</a></td>
+                            </tr>       
+                        </ui:repeat>
+                        </c:if>
+                        <c:if test="#{accountBean.rolename=='prep'}">
+                            <ui:repeat var="statement" value="#{statementBean.statementForPrep}">
+                            <tr>
+                                <td>#{statement.idStatement}</td>
+                                <td>#{statement.subject.subjectTitle}</td>
+                                <td>#{statement.user.fio}</td>
+                                <td>#{statement.status}</td>
+                                <td>#{statement.title}</td>
+                                <td>#{statement.semestr}</td>
+                                <td><a href='./statement-details.xhtml?sid=#{statement.idStatement}' class='more-link'>Подробнее</a></td>
+                            </tr>       
+                        </ui:repeat>
+                        </c:if>
+                    </table>
+
+                </div>
+                <div class='inline in_nav'>
+                    <c:if test="#{accountBean.rolename=='dek'}">
+                    <div class='rightbox'>
+                        <a href='./statements.xhtml'>Все ведомости</a>
+                        <a href='./ready-statements.xhtml'>Сданные ведомости</a>
+                        <a href='./create-statement.xhtml' class='add'>Создать ведомость</a>
+                    </div>
+                    </c:if>
+                    <c:if test="#{accountBean.rolename=='prep'}">
+                    <div class='rightbox' style='padding:15px'>
+                        Показанные ведомости необходимо заполнить оценками и сдать.
+                    </div>
+                    </c:if>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Создание новой ведомости
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    <h:form>
+                        <h:outputText value="Предмет:"/><br/>
+                        <h:selectOneMenu value="#{statementBean.id_subject}">
+                            <f:selectItems value="#{subjectBean.allSubjects}" var="subj" 
+                                           itemLabel="#{subj.subjectTitle}" itemValue="#{subj.idSubject}" />
+                        </h:selectOneMenu>
+                        <br/><br/>
+                        <h:outputText value="Преподаватель:"/><br/>
+                        <h:selectOneMenu value="#{statementBean.id_user}">
+                            <f:selectItems value="#{userBean.allPreps}" var="prep" 
+                                           itemLabel="#{prep.fio}" itemValue="#{prep.idUser}" />
+                        </h:selectOneMenu>
+                        <br/><br/>
+                        <h:outputText value="Группа студентов"/><br/>
+                        <h:selectOneMenu value="#{statementBean.grid}">
+                                            <f:selectItems value="#{userBean.allStudGroups}" var="sg"
+                                                           itemLabel="#{sg.sgname}" itemValue="#{sg.sgid}" />
+                                        </h:selectOneMenu>
+                        <br/><br/>
+                        <h:outputText value="Название ведомости:"/><br/>
+                        <h:inputText value="#{statementBean.title}"/><br/><br/>
+                        <h:outputText value="Код семестра:"/><br/>
+                        <h:inputText value="#{statementBean.semestr}"/><br/><br/>
+                        <h:commandButton value="Создать ведомость" action="#{statementBean.AddStatement()}"/>
+                    </h:form>
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <a href='./statements.xhtml'>Все ведомости</a>
+                        <a href='./ready-statements.xhtml'>Сданные ведомости</a>
+                        <a href='./create-statement.xhtml' class='add'>Создать ведомость</a>
+                    </div>
+
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

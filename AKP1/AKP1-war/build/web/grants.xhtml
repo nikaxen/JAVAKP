@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Список всех рассчитанных стипендий
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID-степ.</td>
+                            <td>Название степ.</td>
+                            <td>Семестр</td>
+                            <td>Детали</td>
+                        </tr>
+                        <ui:repeat var="grant" value="#{grantBean.allGrants}">
+                            <tr>
+                                <td>#{grant.idGrant}</td>
+                                <td>#{grant.grantTitle}</td>
+                                <td>#{grant.grantSemestr}</td>
+                                <td><a href='./grant-details.xhtml?semcode=#{grant.grantSemestr}' class='more-link'>Подробнее</a></td>
+                            </tr>       
+                        </ui:repeat>
+                    </table>
+                    
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <a href='./grant-calculate.xhtml' class="add">Рассчитать новую стипендию</a>
+                    </div>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

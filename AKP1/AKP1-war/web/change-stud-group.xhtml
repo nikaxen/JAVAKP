@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Изменить группу студента
+            <f:metadata>
+                <f:viewParam name="stid" value="#{userBean.stid}" />
+            </f:metadata>
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID польз.</td>
+                            <td>ФИО</td>
+                            <td>Тек. группа</td>
+                            <td>Установить группу</td>
+                        </tr>
+                        <ui:repeat var="user" value="#{userBean.userByID}"> 
+                            <tr><h:form>
+                                    <td>#{user.idUser}</td>
+                                    <td>#{user.fio}</td>
+                                    <td>
+                                        <ui:repeat var="studgroup" value="#{userBean.GetStudGroup(user.idUser)}"> 
+                                            <div style="padding-bottom:10px">
+                                                #{studgroup.sgname} <h:commandButton value="x" action="#{userBean.RemoveStudGroup(user.idUser, studgroup.sgid)}"/>
+                                            </div>
+                                        </ui:repeat>
+                                        
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu value="#{userBean.studgroupid}">
+                                            <f:selectItems value="#{userBean.allStudGroups}" var="sg"
+                                                           itemLabel="#{sg.sgname}" itemValue="#{sg.sgid}" />
+                                        </h:selectOneMenu>
+                                        <h:commandButton value="Установить" action="#{userBean.SetStudGroup(user.idUser)}"/>
+                                    </td>
+                                </h:form>
+                            </tr>       
+                        </ui:repeat>
+                    </table><br/><br/><br/>
+                    * Будьте уверены в своих действиях. Если студент еще не состоит в группе - группа добавится, если уже состоит - группа изменится.
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <a href='./students-list.xhtml'>Список всех студентов</a>
+                        <a href='./users.xhtml'>Список всех пользователей</a>
+                    </div>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

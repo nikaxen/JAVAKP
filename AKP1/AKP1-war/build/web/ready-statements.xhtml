@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Список сданных ведомостей
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID-вед.</td>
+                            <td>Предмет</td>
+                            <td>Преподаватель</td>
+                            <td>Статус</td>
+                            <td>Название</td>
+                            <td>Семестр</td>
+                            <td>Детали</td>
+                        </tr>
+                        <ui:repeat var="statement" value="#{statementBean.readyStatements}">
+                            <tr>
+                                <td>#{statement.idStatement}</td>
+                                <td>#{statement.subject.subjectTitle}</td>
+                                <td>#{statement.user.fio}</td>
+                                <td>#{statement.status}</td>
+                                <td>#{statement.title}</td>
+                                <td>#{statement.semestr}</td>
+                                <td><a href='./statement-details.xhtml?sid=#{statement.idStatement}' class='more-link'>Подробнее</a></td>
+                            </tr>       
+                        </ui:repeat>
+                    </table>
+
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <a href='./statements.xhtml'>Все ведомости</a>
+                        <a href='./ready-statements.xhtml'>Сданные ведомости</a>
+                        <a href='./create-statement.xhtml' class='add'>Создать ведомость</a>
+                    </div>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

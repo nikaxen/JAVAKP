@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="./template.xhtml">
+        <ui:define name="landing_name">
+            <c:if test="#{accountBean.rolename=='neizv'}">Неизвестный пользователь</c:if>
+            <c:if test="#{accountBean.rolename!='neizv'}">Ошибка 403</c:if>
+        </ui:define>
+        <ui:define name="content">
+            <center>
+                <div class='notify_au_box'>
+                    <c:if test="#{accountBean.rolename=='neizv'}">
+                    <h1>Неизвестный пользователь.</h1><br/>
+                        Сотрудник деканата еще не определил для вас роль на сайте.
+                    </c:if>
+            <c:if test="#{accountBean.rolename!='neizv'}">
+                <h1>Доступ запрещен.</h1><br/>
+                        Вы не наделены правами для просмотра данной страницы.</c:if>
+                    
+                </div>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>
+

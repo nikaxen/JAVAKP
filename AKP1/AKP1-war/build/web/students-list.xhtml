@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Список пользователей. 
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID польз.</td>
+                            <td>ФИО</td>
+                            <td>Группа</td>
+                        </tr>
+                        <ui:repeat var="stud" value="#{userBean.allStuds}"> 
+                            <tr><h:form>
+                                    <td>#{stud.idUser}</td>
+                                    <td>#{stud.fio}</td>
+                                    <td>
+                                        <a href="./change-stud-group.xhtml?stid=#{stud.idUser}">Управление группой</a>
+                                    </td>
+                                </h:form>
+                            </tr>       
+                        </ui:repeat>
+                    </table>
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <a href='./users.xhtml'>Список всех пользователей</a>
+                    </div>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

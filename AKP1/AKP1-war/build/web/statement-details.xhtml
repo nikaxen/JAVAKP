@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Просмотр и редактирование ведомости
+            <f:metadata>
+                <f:viewParam name="sid" value="#{statementBean.sid}" />
+            </f:metadata>
+            #{statementBean.sid}
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    <div class='panel greybox' style='width:98%'>
+                        <div class='inline' style='float:left;'>
+                        <b>Название</b>: #{statementBean.statementById.title}<br/>
+                        <b>ID-вед</b>: #{statementBean.statementById.idStatement}<br/>
+                        <b>Предмет</b>: #{statementBean.statementById.subject.subjectTitle}<br/>
+                        <b>Преподаватель</b>: #{statementBean.statementById.user.fio}<br/>
+                        <b>Группа студентов</b>: #{statementBean.studGroup}<br/>
+                        <b>Семестр</b>: #{statementBean.statementById.semestr}<br/>
+                        <b>Статус</b>: #{statementBean.statementById.status}<br/>
+                        </div>
+                        <div class='inline' style='float:right'><br/>
+                        <c:if test="#{accountBean.rolename=='dek'}">
+                            <c:if test="#{statementBean.statementById.status!='close'}">
+                                <h:form><b><h:commandLink action="#{statementBean.SetStatementStatus(3)}" value="Закрыть ведомость" styleClass="more-link"/></b></h:form><br/>
+                            </c:if>
+                            <c:if test="#{statementBean.statementById.status!='open'}">
+                            <h:form><b><h:commandLink action="#{statementBean.SetStatementStatus(1)}" value="Открыть ведомость" styleClass="more-link"/></b></h:form><br/>
+                            </c:if>
+                        </c:if>
+                        <c:if test="#{accountBean.rolename=='prep' and statementBean.statementById.status!='ready'}">
+                            <h:form><b><h:commandLink action="#{statementBean.SetStatementStatus(2)}" value="Сдать ведомость" styleClass="more-link"/></b></h:form>
+                        </c:if>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <c:if test="#{accountBean.rolename=='prep'}">
+                    <div class='greybox'>
+                        <h1>Добавить оценку</h1>#{statementBean.sid}<br/>
+                    <h:form>
+                        <h:outputText value="Студент:"/><br/>
+                        <h:selectOneMenu value="#{markBean.id_user}">
+                            <f:selectItems value="#{userBean.getAllStudsInGroup(statementBean.studGroupID)}" var="stud" 
+                                           itemLabel="#{stud.fio}" itemValue="#{stud.idUser}" />
+                        </h:selectOneMenu><br/><br/>
+                        <h:outputText value="Оценка:"/><br/>
+                        <h:inputText value="#{markBean.mark}"/><br/><br/>
+                        <h:commandButton value="Добавить оценку" action="#{markBean.AddMark(statementBean.sid)}"/>
+                    </h:form>
+                    </div>
+                    <br/><br/>
+                    </c:if>
+                    <h1>Список оценок в данной ведомости:</h1>
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID-оценки</td>
+                            <td>Студент</td>
+                            <td>Оценка</td>
+                            <c:if test="#{accountBean.rolename=='prep'}"><td>Детали</td></c:if>
+                        </tr>
+                        <ui:repeat var="mark" value="#{markBean.getMarksInStatement(statementBean.sid)}">
+                            <tr>
+                                <td>#{mark.idMark}</td>
+                                <td>#{mark.user.fio}</td>
+                                <td>#{mark.mark}</td>
+                                <c:if test="#{accountBean.rolename=='prep'}"><td><h:form><h:commandLink action="#{markBean.DeleteMark(mark.idMark)}" value="Удалить" styleClass="more-link"/></h:form></td></c:if>
+                            </tr>       
+                        </ui:repeat>
+                    </table>
+
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <c:if test="#{accountBean.rolename=='dek'}">
+                        <a href='./statements.xhtml'>Все ведомости</a>
+                        <a href='./ready-statements.xhtml'>Сданные ведомости</a>
+                        <a href='./create-statement.xhtml' class='add'>Создать ведомость</a>
+                        </c:if>
+                        <c:if test="#{accountBean.rolename=='prep'}">
+                        <a href='./statements.xhtml'>Несданные ведомости</a>
+                        </c:if>
+                    </div>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

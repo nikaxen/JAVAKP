@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Вход
+        </ui:define>
+        <ui:define name="content">
+            <form id="loginForm" name="loginForm" method="post" action="j_security_check">
+                 Email: <br/><input id="username" type="text" name="j_username" class="textbox"></input><br/><br/>
+                 Пароль: <br/><input id="password" type="password" name="j_password" class="textbox"></input><br/><br/>
+                 <input name="login" type="submit" value="Войти" id="submit" class="button blue"/>
+                 </form>
+        </ui:define>
+    </ui:composition>
+</html>
