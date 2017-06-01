@@ -29,7 +29,7 @@ public class GrantBean implements Serializable{
     private dao.GDAO gDAO2;
     
     public String AddGrant() {
-        //gDAO2.AddNewGrant(grant_semestr,grant_title);
+        gDAO2.AddNewGrant(grant_semestr,grant_title);
         return "grants.xhtml";
     }
     
@@ -39,8 +39,8 @@ public class GrantBean implements Serializable{
    public List<GrantUser> getGrantDetails(){
         return gDAO2.getGrantDetails(sem_code);
     }
-    public String GrantCalculate(String sem){
-        gDAO.GrantCalculate();
+    public String GrantCalculate(){
+        gDAO.GrantCalculate(sem_code);
         return "grants.xhtml";
     }
     

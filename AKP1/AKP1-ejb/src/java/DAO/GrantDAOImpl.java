@@ -28,11 +28,12 @@ public class GrantDAOImpl implements GrantDAO, Serializable {
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public void GrantCalculate() { // GRANT CALCULATE method
+    public void GrantCalculate(String semcode) { // GRANT CALCULATE method
 
-        Grant grant = gDAO2.getGrantBySemestr();
+        Grant grant = gDAO2.getGrantBySemestr(semcode);
         
-        Query query = em.createQuery("SELECT u FROM User u JOIN u.markList ml JOIN ml.statement st WHERE st.semestr='SPRING2017' GROUP BY u.idUser", User.class);
+        Query query = em.createQuery("SELECT u FROM User u JOIN u.markList ml JOIN ml.statement st WHERE st.semestr=?1 GROUP BY u.idUser", User.class);
+        query.setParameter(1, semcode);
         List<User> uList = query.getResultList();
         boolean grant_status = true;
         for (User u : uList) {
@@ -40,7 +41,7 @@ public class GrantDAOImpl implements GrantDAO, Serializable {
             for (Mark m : markList) {
                 if (u.getIdUser() == m.getUser().getIdUser()) {
                     System.out.println(u.getFio() + " - " + m.getMark());
-                    if (m.getMark() < 3) {
+                    if (m.getMark() < 4) {
                         grant_status = false;
                     }
                 }

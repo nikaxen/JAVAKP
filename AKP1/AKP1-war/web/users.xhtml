@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Список пользователей. 
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+                    <table cellspacing='0'>
+                        <tr>
+                            <td>ID польз.</td>
+                            <td>ФИО</td>
+                            <td>Email</td>
+                            <td>Роль</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <ui:repeat var="user" value="#{userBean.allUsers}"> 
+                            <tr><h:form>
+                                    <td>#{user.idUser}</td>
+                                    <td>#{user.fio}</td>
+                                    <td>#{user.email}</td>
+                                    <td>
+                                        <ui:fragment rendered="#{user.rolename != 'stud'}">
+                                            <h:commandLink action="#{userBean.ChangeUR(user.idUser,1)}" value="stud" styleClass="more-link"/>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{user.rolename == 'stud'}">
+                                            <h:outputText value="#{user.rolename}"/>
+                                        </ui:fragment>
+                                    </td>
+                                    <td>
+                                        <ui:fragment rendered="#{user.rolename != 'dek'}">
+                                            <h:commandLink action="#{userBean.ChangeUR(user.idUser,2)}" value="dek" styleClass="more-link"/>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{user.rolename == 'dek'}">
+                                            <h:outputText value="#{user.rolename}"/>
+                                        </ui:fragment>
+                                    </td>
+                                    <td>
+                                        <ui:fragment rendered="#{user.rolename != 'prep'}">
+                                            <h:commandLink action="#{userBean.ChangeUR(user.idUser,3)}" value="prep" styleClass="more-link"/>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{user.rolename == 'prep'}">
+                                            <h:outputText value="#{user.rolename}"/>
+                                        </ui:fragment>
+                                    </td>
+                                </h:form>
+                            </tr>       
+                        </ui:repeat>
+                    </table>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <div style="padding:15px">
+                        Показан список всех пользователей, зарегистрированных на сайте.
+                        <br/><br/>
+                        <hr/>
+                        <br/>
+                        <b>Роли пользователей:</b><br/><br/>
+                        neizv - Неизвестный пользователь<br/>
+                        stud - Студент<br/>
+                        prep - Преподаватель<br/>
+                        dek - Сотрудник деканат.
+                        </div>
+                        <a href='./students-list.xhtml'>Список студентов</a>
+                    </div>
+                </div></div>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

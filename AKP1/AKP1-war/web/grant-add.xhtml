@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="landing_name">
+            Добавить новую стипендию
+        </ui:define>
+        <ui:define name="content">
+            <div class='panel'>
+                <div class='inline in_main'>
+
+                    <h:form>
+                        <h:outputText value="КОД СЕМЕСТРА:"/><br/>
+                        <h:inputText value="#{grantBean.grant_semestr}"/><br/><br/>
+                        <h:outputText value="НАЗВАНИЕ СТИПЕНДИИ:"/><br/>
+                        <h:inputText value="#{grantBean.grant_title}"/><br/><br/>
+                        <h:commandButton value="Добавить стипендию" action="#{grantBean.AddGrant()}"/>
+                    </h:form>
+
+                </div>
+                <div class='inline in_nav'>
+                    <div class='rightbox'>
+                        <a href='./grants.xhtml'>Список всех стипендий</a>
+                    </div>
+                </div></div>
+
+        </ui:define>
+    </ui:composition>
+</html>

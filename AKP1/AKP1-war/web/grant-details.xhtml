@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="landing_name">
@@ -14,14 +15,14 @@
             <div class='panel'>
                 <div class='inline in_main'>
                     <h:form>
-                        <h:commandButton value="Рассчитать" action="#{grantBean.GrantCalculate(grantBean.sem_code)}"/>
-                </h:form>
-                    (кнопка для вызова метода расчета стипендии)
+                        <h:commandButton value="Рассчитать" action="#{grantBean.GrantCalculate()}"/>
+                    </h:form>
                     
-                    
-                    
+
+
+
                     <br/><br/>
-                    
+
                     <table cellspacing='0'>
                         <tr>
                             <td>Код семестра</td>
@@ -34,17 +35,24 @@
                                 <td>#{gd.grant.grantSemestr}</td>
                                 <td>#{gd.idUser}</td>
                                 <td>#{userBean.getUserFIOByID(gd.idUser)}</td>
-                                <td>#{gd.grantStatus}</td>
+                                <td>
+                                    <ui:fragment rendered="#{gd.grantStatus=='ok'}">
+                                        <b style="color:#00cc33">Одобрено</b>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{gd.grantStatus=='no'}">
+                                        <b style="color:#cc0033">Нет</b>
+                                    </ui:fragment>
+                                </td>
                             </tr>       
                         </ui:repeat>
                     </table>
-                    
-                    
+
+
                 </div>
                 <div class='inline in_nav'>
                     <div class='rightbox'>
                         <a href='./grants.xhtml'>Список всех стипендий</a>
-                        <a href='./grant-calculate.xhtml' class="add">Рассчитать новую стипендию</a>
+                        <a href='./grant-add.xhtml' class="add">Добавить новую стипендию</a>
                     </div>
                 </div></div>
 

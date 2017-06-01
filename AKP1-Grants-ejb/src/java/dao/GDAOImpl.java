@@ -23,9 +23,9 @@ public class GDAOImpl implements GDAO, Serializable{
     }
     
     @Override
-    public Grant getGrantBySemestr(){
+    public Grant getGrantBySemestr(String semcode){
         Query query_grant = em2.createQuery("SELECT g FROM Grant g WHERE g.grantSemestr=?1", Grant.class);
-        query_grant.setParameter(1, "SPRING2017");
+        query_grant.setParameter(1, semcode);
         return (Grant) query_grant.getSingleResult();
     }
     
@@ -40,7 +40,7 @@ public class GDAOImpl implements GDAO, Serializable{
         Grant g = em2.find(Grant.class, id_grant);
         GrantUser gu = new GrantUser();
         
-        gu.setIdUser(id_user); // REALLY STRANGE
+        gu.setIdUser(id_user);
         gu.setGrant(g);
         if (grant_status) {
         System.out.println("ПОЛУЧАЕТ - " + id_user);
@@ -50,5 +50,13 @@ public class GDAOImpl implements GDAO, Serializable{
         gu.setGrantStatus("no");
         }
         em2.persist(gu);
+    }
+
+    @Override
+    public void AddNewGrant(String grant_semestr, String grant_title) {
+        Grant g = new Grant();
+        g.setGrantSemestr(grant_semestr);
+        g.setGrantTitle(grant_title);
+        em2.persist(g);
     }
 }

@@ -7,6 +7,6 @@ import javax.ejb.Local;
 
 @Local
 public interface GrantDAO {
-    public void GrantCalculate();
+    public void GrantCalculate(String semcode);
     public List<Grant> getAllGrants();
 }

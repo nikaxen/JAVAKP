@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>
+            <ui:insert name="landing_name" ></ui:insert>
+        </title>
+        <link rel='stylesheet' href='./design/style.css'/>
+    </h:head>
+    <h:body>
+        <div id='header'>
+            <div class='centered'>
+                <div class='panel'>
+                    <div class='inline'>
+                        <a href='./index.xhtml' class='logo'><img src='./design/logo.png' style='margin-top:5px'/></a>
+                    </div>
+                    <div class='inline'>
+                        <div class='topnav'>
+                            <c:if test="#{accountBean.rolename=='dek'}">
+                                <a href='./statements.xhtml'>Ведомости</a>
+                                <a href='./users.xhtml'>Пользователи</a>
+                                <a href="./grants.xhtml">Стипендии</a>
+                            </c:if>
+                            <c:if test="#{accountBean.rolename=='prep'}">
+                                <a href='./statements.xhtml'>Ведомости</a>
+                            </c:if>
+                            <c:if test="#{accountBean.rolename=='stud'}">
+                                <a href='./marks.xhtml?view=all'>Оценки</a>
+                                <a href='./marks.xhtml?view=bad'>Задолженности</a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class='inline' style='float:right'>
+                        <div class='profile_nav'>
+                            <c:if test="#{accountBean.userLoggedIn=='true'}">
+                                <h:form>
+                                    <h:commandLink action="#{accountBean.logout()}" value="Выход" class="logout" />
+                                </h:form>
+                            </c:if>
+                            <c:if test="#{accountBean.userLoggedIn=='false'}">
+                                <a href="./login.xhtml">Войти</a><a href="./register.xhtml">Регистрация</a>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+        <div class='lander'>
+            <div class='centered'>
+                <div class='panel'>
+                    <div class='inline' style='float:left'><ui:insert name="landing_name" ></ui:insert></div>
+                    <div class='inline' style='float:right'><b>#{accountBean.rolename}</b></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class='main'>
+            <div class='centered'>
+
+                <br/><br/>
+
+                <ui:insert name="content" >
+
+                </ui:insert> 
+
+            </div>
+        </div>
+
+        <div class='footer'>
+            <div class='centered'>
+                <div class='panel'>
+                    <div class='inline'>Аксенов Никита, ИСТ-114</div>
+                    <div class='inline' style='float:right'>2017</div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+
