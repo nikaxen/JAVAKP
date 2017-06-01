@@ -10,7 +10,7 @@ import javax.enterprise.context.SessionScoped;
 
 
 @Named(value = "subjectBean")
-@RequestScoped
+@SessionScoped
 public class SubjectBean implements Serializable{
     @EJB
     private DAO.SubjectDAO subDAO;

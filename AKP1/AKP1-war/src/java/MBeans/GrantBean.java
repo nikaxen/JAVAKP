@@ -41,7 +41,7 @@ public class GrantBean implements Serializable{
     }
     public String GrantCalculate(){
         gDAO.GrantCalculate(sem_code);
-        return "grants.xhtml";
+        return "";
     }
     
     public int getId_grant() {

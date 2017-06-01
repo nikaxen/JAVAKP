@@ -10,7 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 
 @Named(value = "userBean")
-@SessionScoped
+@RequestScoped
 public class UserBean implements Serializable{
 
     

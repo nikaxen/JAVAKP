@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Named(value = "markBean")
-@SessionScoped
+@RequestScoped
 public class MarkBean implements Serializable{
 private int id_mark;
     private int id_statement;

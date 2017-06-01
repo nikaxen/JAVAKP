@@ -9,13 +9,14 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Stateful
+@Stateless
 public class GrantDAOImpl implements GrantDAO, Serializable {
 
     @PersistenceContext(unitName = "AKP1-ejbPU")
@@ -26,10 +27,12 @@ public class GrantDAOImpl implements GrantDAO, Serializable {
     @Resource
     SessionContext sc;
     
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public void GrantCalculate(String semcode) { // GRANT CALCULATE method
-
+        
+        gDAO2.CleanGrants(semcode);
+        
         Grant grant = gDAO2.getGrantBySemestr(semcode);
         
         Query query = em.createQuery("SELECT u FROM User u JOIN u.markList ml JOIN ml.statement st WHERE st.semestr=?1 GROUP BY u.idUser", User.class);
@@ -48,9 +51,7 @@ public class GrantDAOImpl implements GrantDAO, Serializable {
             }
             
             gDAO2.SetGrant(u.getIdUser(), grant.getIdGrant(), grant_status);
-
             grant_status = true;
-
         }
     }
 

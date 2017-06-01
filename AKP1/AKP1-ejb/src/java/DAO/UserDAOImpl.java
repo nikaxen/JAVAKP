@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Stateful
+@Stateless
 public class UserDAOImpl implements UserDAO,Serializable {
     @PersistenceContext(unitName = "AKP1-ejbPU")
     private EntityManager em;

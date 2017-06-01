@@ -24,6 +24,7 @@ public class AccountBean implements Serializable {
     @EJB
     private DAO.UserDAO uDAO;
     
+    
         private Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         private String email;
         private String IndexPage;

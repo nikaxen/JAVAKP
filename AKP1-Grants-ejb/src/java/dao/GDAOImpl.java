@@ -6,11 +6,12 @@ import Ent.GrantUser;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Stateful
+@Stateless
 public class GDAOImpl implements GDAO, Serializable{
     @PersistenceContext(unitName = "AKP1-Grants-ejbPU")
     private EntityManager em2;
@@ -49,7 +50,7 @@ public class GDAOImpl implements GDAO, Serializable{
         System.out.println("НЕ ПОЛУЧАЕТ - " + id_user);
         gu.setGrantStatus("no");
         }
-        em2.persist(gu);
+        em2.merge(gu);
     }
 
     @Override
@@ -58,5 +59,12 @@ public class GDAOImpl implements GDAO, Serializable{
         g.setGrantSemestr(grant_semestr);
         g.setGrantTitle(grant_title);
         em2.persist(g);
+    }
+
+    @Override
+    public void CleanGrants(String semcode) {
+        Query query = em2.createQuery("DELETE FROM GrantUser gu WHERE gu.grant.grantSemestr=?1", GrantUser.class);
+        query.setParameter(1, semcode);
+        query.executeUpdate();
     }
 }

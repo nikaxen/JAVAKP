@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Stateful
+@Stateless
 public class StatementDAOImpl implements StatementDAO,Serializable {
     @PersistenceContext(unitName = "AKP1-ejbPU")
     private EntityManager em;
